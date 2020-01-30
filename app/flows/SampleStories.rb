@@ -6,19 +6,21 @@ class SampleStories
       res = http.request req
       ids = JSON.parse(res.body)
 
-
-      ids.each do |id|
+      ids.take(30).map do |id|
         uri = "https://hacker-news.firebaseio.com/v0/item/#{id}/.json"
         req = Net::HTTP::Get.new uri
         res = http.request req
         item = JSON.parse(res.body)
-        score = item["score"]
         title = item["title"]
-
-        if score > 500
-          puts "#{score} --- #{title}"
-        end
+        score = item["score"]
+        url = item["url"] || ""
+        id = item["id"]
+        puts "#{title} - #{score}"
+        {title: title, link: url, remote_id: id}
+      end.map do |opts|
+        Story.upsert(opts)
       end
+      puts("Updated homepage stories")
     end
   end
 end
