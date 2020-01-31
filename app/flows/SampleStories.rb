@@ -1,6 +1,7 @@
 class SampleStories
   def self.run
     uri = URI("https://hacker-news.firebaseio.com/v0/topstories.json")
+    now = Time.now
     Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
       req = Net::HTTP::Get.new uri
       res = http.request req
@@ -10,15 +11,14 @@ class SampleStories
         uri = "https://hacker-news.firebaseio.com/v0/item/#{id}/.json"
         req = Net::HTTP::Get.new uri
         res = http.request req
-        item = JSON.parse(res.body)
+        JSON.parse(res.body)
+      end.map do |item|
         title = item["title"]
         score = item["score"]
         url = item["url"] || ""
         id = item["id"]
-        puts "#{title} - #{score}"
-        {title: title, link: url, remote_id: id}
-      end.map do |opts|
-        Story.upsert(opts)
+        Story.upsert(id: id, title: title, url: url)
+        Sample.create!(ts: now, score: score, story_id: id)
       end
       puts("Updated homepage stories")
     end

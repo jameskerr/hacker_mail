@@ -10,15 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_30_181532) do
+ActiveRecord::Schema.define(version: 2020_01_30_221107) do
+
+  create_table "samples", force: :cascade do |t|
+    t.datetime "ts"
+    t.integer "score"
+    t.integer "story_id", null: false
+    t.index ["story_id"], name: "index_samples_on_story_id"
+    t.index ["ts"], name: "index_samples_on_ts"
+  end
 
   create_table "stories", force: :cascade do |t|
     t.string "title", null: false
-    t.string "link", null: false
-    t.integer "remote_id", null: false
+    t.string "url", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["remote_id"], name: "index_stories_on_remote_id", unique: true
   end
 
+  add_foreign_key "samples", "stories"
 end
