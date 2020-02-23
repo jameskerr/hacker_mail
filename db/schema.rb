@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_30_221107) do
+ActiveRecord::Schema.define(version: 2020_02_14_041643) do
 
   create_table "samples", force: :cascade do |t|
     t.datetime "ts"
@@ -20,6 +20,13 @@ ActiveRecord::Schema.define(version: 2020_01_30_221107) do
     t.index ["ts"], name: "index_samples_on_ts"
   end
 
+  create_table "sent_stories", id: false, force: :cascade do |t|
+    t.integer "subscriber_id"
+    t.integer "story_id"
+    t.index ["story_id"], name: "index_sent_stories_on_story_id"
+    t.index ["subscriber_id"], name: "index_sent_stories_on_subscriber_id"
+  end
+
   create_table "stories", force: :cascade do |t|
     t.string "title", null: false
     t.string "url", null: false
@@ -27,5 +34,15 @@ ActiveRecord::Schema.define(version: 2020_01_30_221107) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "subscribers", force: :cascade do |t|
+    t.string "email"
+    t.integer "threshold"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_subscribers_on_email", unique: true
+  end
+
   add_foreign_key "samples", "stories"
+  add_foreign_key "sent_stories", "stories"
+  add_foreign_key "sent_stories", "subscribers"
 end

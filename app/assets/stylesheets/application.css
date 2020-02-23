@@ -13,3 +13,14 @@
  *= require_tree .
  *= require_self
  */
+
+html {
+  min-height: 100%;
+}
+
+body {
+  font-family: "Tomorrow", sans-serif;
+  background: linear-gradient(to bottom right, orangered, tomato, darkorange);
+  min-height: 100%;
+  color: #202020;
+}

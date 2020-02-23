@@ -15,12 +15,11 @@ class SampleStories
       end.map do |item|
         title = item["title"]
         score = item["score"]
-        url = item["url"] || ""
         id = item["id"]
+        url = item["url"] || "https://news.ycombinator.com/item?id=#{id}"
         Story.upsert(id: id, title: title, url: url)
         Sample.create!(ts: now, score: score, story_id: id)
       end
-      puts("Updated homepage stories")
     end
   end
 end

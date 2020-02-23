@@ -1,0 +1,66 @@
+<main class="subscriber-new">
+  <section class="heading">
+    <h1>Hacker Mail</h1>
+  </section>
+  <section>
+    <article>
+      <h3>Stories above your threshold in your mailbox.</h3>
+      <p>I love Hacker News. The algorithm used to score stories is consistently impressive.</p>
+      <p>But every time I visit Hacker News, I do the same thing.
+        I scan the front page looking for stories with high points.</p>
+        <p>I realized a computer could do this for me and this service was conceived.</p>
+        <p>Once a day, it will send you an email with all the front page stories that have exceeded your points threshold.</p>
+
+    </article>
+  </section>
+
+  <section>
+    <h3>Sign me up!</h3>
+    <div class="subscriber-form">
+      <%= render 'form', subscriber: @subscriber %>
+    </div>
+  </section>
+
+  <section>
+    <h3>What will the email look like?</h3>
+    <p>Something like this: </p>
+    <div class="sample-email">
+      <header>
+        <div class="address">
+          <p class="from"><b>Hacker Mail</b> mail@hn-alerts.com</p>
+          <p class="to">to me</p>
+        </div>
+        <div class="time">
+          <p>29 minutes ago</p>
+        </div>
+      </header>
+      <p>Hi there,</p>
+
+      <p>Here are the stories on the front page of <a href="">Hacker News</a>
+        with scores above your threshold of <b>300</b> in the last 24 hours.
+      </p>
+      <p></p>
+      <ul>
+        <li>
+          <a href="">Ask HN: What job can a “jack of all trades” look for?</a>
+          <br>
+          Max score: 317
+        </li>
+        <li>
+          <a href="">ActivityPub, the secret weapon of the Fediverse</a>
+          <br>
+          Max score: 331
+        </li>
+        <li>
+          <a href="">Signs you’re working in a feature factory</a>
+          <br>
+          Max score: 602
+        </li>
+      </ul>
+      <p></p>
+      <p>Enjoy!</p>
+    </div>
+  </section>
+
+
+</main>

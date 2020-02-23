@@ -1,0 +1,18 @@
+<p>Hi there,</p>
+<p>Here are the stories on the front page of <a href="https://news.ycombinator.com/">Hacker News</a>
+  with scores above your threshold of <b><%= @threshold %></b> in the last 24 hours.
+</p>
+
+<p>
+  <ul>
+  <% @stories.each do |story| %>
+  <li>
+    <a href="<%= story.url %>"><%= story.title %></a>
+    <br />
+    Max score: <%= story.max_score %>
+  </li>
+  <% end %>
+  </ul>
+</p>
+
+<p>Enjoy!</p>
