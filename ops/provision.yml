@@ -5,3 +5,9 @@
     - name: "Install Ruby"
       apt:
         name: ruby-full
+    - name: Update gems
+      shell: gem update --system
+    - name: Install bundler
+      shell: gem install bundler
+      args:
+        chdir: /app

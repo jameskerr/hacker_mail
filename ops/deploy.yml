@@ -1,0 +1,12 @@
+---
+- hosts: all
+  remote_user: root
+  tasks:
+    - name: Checkout Code
+      git:
+        repo: "https://github.com/jameskerr/hacker_mail"
+        dest: /app
+    - name: Bundle Install
+      shell: bundle install
+      args:
+        chdir: /app
