@@ -1,7 +1,7 @@
 # http://github.com/javan/whenever
 
 set :output, "./log/cron.log"
-set :environment, "development"
+set :environment, "production"
 
 every 5.minutes do
   rake "stories:sample"
