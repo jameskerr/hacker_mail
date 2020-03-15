@@ -42,7 +42,7 @@ Rails.application.configure do
     port: 587,
     domain: "example.com",
     user_name: "apikey",
-    password: ENV["SENDGRID_KEY"],
+    password: Rails.application.credentials.sendgrid_key,
     authentication: "plain",
     enable_starttls_auto: true,
   }
