@@ -1,0 +1,30 @@
+---
+- name: provision
+  hosts: all
+  remote_user: root
+  roles:
+    - role: geerlingguy.nodejs
+      vars:
+        nodejs_version: "12.x"
+    - user
+    - webserver
+    - yarn
+    - role: zzet.rbenv
+      vars:
+        env: system
+        version: v1.1.2
+        default_ruby: 2.7.0
+        rubies:
+          - version: 2.7.0
+    - role: geerlingguy.passenger
+      vars:
+        passenger_app_root: /app/public
+
+- name: deploy
+  hosts: all
+  remote_user: deploy
+  gather_facts: no
+  roles:
+    - deploy
+  tags:
+    - deploy

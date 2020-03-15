@@ -1,0 +1,33 @@
+- name: checkout
+  git:
+    repo: "https://github.com/jameskerr/hacker_mail"
+    dest: /app
+    force: yes
+
+- name: copy master key
+  copy:
+    src: ../../../../config/master.key
+    dest: /app/config/master.key
+
+- name: bundle install
+  command: "/bin/bash -lc 'bundle install --without development test'"
+  args:
+    chdir: /app
+
+- name: migrate database
+  command: "/bin/bash -lc 'bin/rails db:create db:migrate RAILS_ENV=production'"
+  args:
+    chdir: /app
+
+- name: compile assets
+  command: "/bin/bash -lc 'bin/rails assets:precompile RAILS_ENV=production'"
+  args:
+    chdir: /app
+
+- name: update cron jobs
+  command: "/bin/bash -lc 'bundle exec whenever --update'"
+  args:
+    chdir: /app
+
+- name: restart passenger
+  command: /bin/bash -lc 'passenger-config restart-app /'

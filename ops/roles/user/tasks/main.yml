@@ -1,0 +1,15 @@
+- name: sudo without password for deploy user
+  copy:
+    content: "deploy ALL=(ALL:ALL) NOPASSWD:ALL"
+    dest: /etc/sudoers.d/deploy_nopasswd
+    mode: 0440
+
+- name: create deploy user
+  user:
+    name: deploy
+    shell: /bin/bash
+
+- name: add ssh key
+  authorized_key:
+    user: deploy
+    key: "{{ lookup('file', '/Users/jkerr/.ssh/id_rsa.pub')}}"

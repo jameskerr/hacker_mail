@@ -1,0 +1,7 @@
+- name: create deploy directory
+  file:
+    path: /app
+    owner: deploy
+    group: deploy
+    state: directory
+    mode: 0775
