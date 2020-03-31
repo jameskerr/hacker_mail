@@ -1,0 +1,15 @@
+<%= link_to "Back", stories_url %>
+<h1><%= @story.title %></h1>
+
+
+<script>
+  data = JSON.parse('<%= raw @story.samples.map{|s| {score: s.score, ts: s.ts}}.to_json %>')
+  console.log(data.map(d => {
+    return {
+      score: d.score,
+      ts: new Date(d.ts)
+    }
+  }))
+
+  // Do some d3 magic in here
+</script>
