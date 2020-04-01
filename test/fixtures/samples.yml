@@ -1,11 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  ts: 2020-01-30 14:11:07
-  points: 1
+  ts: "2020-01-30 14:11:07"
+  score: 151
   story: one
 
 two:
-  ts: 2020-01-30 14:11:07
-  points: 1
+  ts: "2020-01-30 14:11:07"
+  score: 252
   story: two

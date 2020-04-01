@@ -1,9 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  email: MyString
-  threshold: 1
+  email: "one@gmail.com"
+  threshold: 100
+  key: "123"
 
 two:
-  email: MyString
-  threshold: 1
+  email: "two@gmail.com"
+  threshold: 200
+  key: "456"

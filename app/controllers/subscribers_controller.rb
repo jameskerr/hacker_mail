@@ -1,17 +1,6 @@
 class SubscribersController < ApplicationController
   before_action :set_subscriber, only: [:show, :edit, :update, :destroy]
 
-  # GET /subscribers
-  # GET /subscribers.json
-  def index
-    @subscribers = Subscriber.all
-  end
-
-  # GET /subscribers/1
-  # GET /subscribers/1.json
-  def show
-  end
-
   # GET /subscribers/new
   def new
     @subscriber = Subscriber.new
@@ -19,21 +8,29 @@ class SubscribersController < ApplicationController
 
   # GET /subscribers/1/edit
   def edit
+    if !@subscriber.confirmed?
+      if @subscriber.update confirmed: true
+        @confirmed = true
+      end
+    end
+    render :edit
   end
 
   # POST /subscribers
   # POST /subscribers.json
   def create
-    @subscriber = Subscriber.find_by(email: subscriber_params[:email]) ||
-                  Subscriber.new(subscriber_params)
+    @subscriber = Subscriber.find_by(email: create_params[:email]) ||
+                  Subscriber.new(create_params)
 
-    respond_to do |format|
+    if @subscriber.confirmed?
+      HackerMailer.with(subscriber: @subscriber).update_link.deliver_later
+      render :confirmation_sent, status: :created
+    else
       if @subscriber.save
-        format.html { redirect_to @subscriber, notice: "Subscriber was successfully created." }
-        format.json { render :show, status: :created, location: @subscriber }
+        HackerMailer.with(subscriber: @subscriber).confirmation.deliver_later
+        render :confirmation_sent, status: :created
       else
-        format.html { render :new }
-        format.json { render json: @subscriber.errors, status: :unprocessable_entity }
+        render :new
       end
     end
   end
@@ -41,14 +38,10 @@ class SubscribersController < ApplicationController
   # PATCH/PUT /subscribers/1
   # PATCH/PUT /subscribers/1.json
   def update
-    respond_to do |format|
-      if @subscriber.update(subscriber_params)
-        format.html { redirect_to @subscriber, notice: "Subscriber was successfully updated." }
-        format.json { render :show, status: :ok, location: @subscriber }
-      else
-        format.html { render :edit }
-        format.json { render json: @subscriber.errors, status: :unprocessable_entity }
-      end
+    if @subscriber.update(update_params)
+      redirect_to edit_subscriber_path(@subscriber), status: :ok, notice: "Updated"
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -57,7 +50,7 @@ class SubscribersController < ApplicationController
   def destroy
     @subscriber.destroy
     respond_to do |format|
-      format.html { redirect_to subscribers_url, notice: "Subscriber was successfully destroyed." }
+      format.html { redirect_to new_subscriber_url, notice: "Subscriber was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -66,11 +59,15 @@ class SubscribersController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_subscriber
-    @subscriber = Subscriber.find(params[:id])
+    @subscriber = Subscriber.find_by(key: params[:key])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
-  def subscriber_params
+  def create_params
     params.require(:subscriber).permit(:email, :threshold)
+  end
+
+  def update_params
+    params.require(:subscriber).permit(:threshold)
   end
 end

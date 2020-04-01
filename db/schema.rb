@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_14_041643) do
+ActiveRecord::Schema.define(version: 2020_03_31_025505) do
 
   create_table "samples", force: :cascade do |t|
     t.datetime "ts"
@@ -39,6 +39,8 @@ ActiveRecord::Schema.define(version: 2020_02_14_041643) do
     t.integer "threshold"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "confirmed", default: false, null: false
+    t.string "key"
     t.index ["email"], name: "index_subscribers_on_email", unique: true
   end
 

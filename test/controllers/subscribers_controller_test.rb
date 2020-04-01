@@ -1,13 +1,8 @@
-require 'test_helper'
+require "test_helper"
 
 class SubscribersControllerTest < ActionDispatch::IntegrationTest
   setup do
     @subscriber = subscribers(:one)
-  end
-
-  test "should get index" do
-    get subscribers_url
-    assert_response :success
   end
 
   test "should get new" do
@@ -16,16 +11,20 @@ class SubscribersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create subscriber" do
-    assert_difference('Subscriber.count') do
-      post subscribers_url, params: { subscriber: {  } }
+    assert_difference("Subscriber.count") do
+      post subscribers_url, params: { subscriber: { email: "kerr@me.com", threshold: 100 } }
     end
 
-    assert_redirected_to subscriber_url(Subscriber.last)
+    assert_response :created
   end
 
-  test "should show subscriber" do
-    get subscriber_url(@subscriber)
-    assert_response :success
+  test "should create subscriber when confirmed" do
+    Subscriber.create(email: "kerr@me.com", threshold: 300, confirmed: true)
+    assert_no_difference("Subscriber.count") do
+      post subscribers_url, params: { subscriber: { email: "kerr@me.com", threshold: 100 } }
+    end
+
+    assert_response :created
   end
 
   test "should get edit" do
@@ -33,13 +32,19 @@ class SubscribersControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should confirm subscriber when visiting" do
+    assert_equal false, @subscriber.confirmed
+    get edit_subscriber_url(@subscriber)
+    assert_equal true, @subscriber.reload.confirmed
+  end
+
   test "should update subscriber" do
-    patch subscriber_url(@subscriber), params: { subscriber: {  } }
-    assert_redirected_to subscriber_url(@subscriber)
+    patch subscriber_url(@subscriber), params: { subscriber: { threshold: 100 } }
+    assert_response :ok
   end
 
   test "should destroy subscriber" do
-    assert_difference('Subscriber.count', -1) do
+    assert_difference("Subscriber.count", -1) do
       delete subscriber_url(@subscriber)
     end
 

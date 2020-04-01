@@ -1,6 +1,9 @@
-<h1>Editing Subscriber</h1>
+<% if @confirmed %>
+<h1>You've confirmed your account</h1>
+<% else %>
+<h1>Edit your profile</h1>
+<% end %>
 
 <%= render 'form', subscriber: @subscriber %>
-
-<%= link_to 'Show', @subscriber %> |
-<%= link_to 'Back', subscribers_path %>
+<br />
+<%= link_to 'Unsubscribe', @subscriber, method: :delete, data: { confirm: 'Are you sure?' } %>

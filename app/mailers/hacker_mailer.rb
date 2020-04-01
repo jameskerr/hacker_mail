@@ -17,4 +17,14 @@ class HackerMailer < ApplicationMailer
       subscriber.stories << @stories
     end
   end
+
+  def confirmation
+    @subscriber = params[:subscriber]
+    mail to: @subscriber.email, subject: "Hacker Mail Confirmation"
+  end
+
+  def update_link
+    @subscriber = params[:subscriber]
+    mail to: @subscriber.email, subject: "Hacker Mail Update Link"
+  end
 end

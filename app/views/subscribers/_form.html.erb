@@ -11,10 +11,16 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :email %>
-    <%= form.email_field :email, placeholder: "me@example.com" %>
-  </div>
+  <% if subscriber.new_record? %>
+    <div>
+      <%= form.label :email %>
+      <%= form.email_field :email, placeholder: "me@example.com" %>
+    </div>
+  <% else  %>
+    <div>
+      <p><%= subscriber.email %></p>
+    </div>
+  <% end %>
 
   <div>
     <%= form.label :threshold %>
@@ -22,6 +28,6 @@
   </div>
 
   <div class="actions">
-    <%= form.submit value: "Sign Up!" %>
+    <%= form.submit subscriber.new_record? ? "Sign me up!" : "Update" %>
   </div>
 <% end %>
