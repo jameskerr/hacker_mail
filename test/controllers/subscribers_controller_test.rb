@@ -34,13 +34,13 @@ class SubscribersControllerTest < ActionDispatch::IntegrationTest
 
   test "should confirm subscriber when visiting" do
     assert_equal false, @subscriber.confirmed
-    get edit_subscriber_url(@subscriber)
+    get subscriber_url(@subscriber)
     assert_equal true, @subscriber.reload.confirmed
   end
 
   test "should update subscriber" do
     patch subscriber_url(@subscriber), params: { subscriber: { threshold: 100 } }
-    assert_response :ok
+    assert_redirected_to @subscriber
   end
 
   test "should destroy subscriber" do
@@ -48,6 +48,6 @@ class SubscribersControllerTest < ActionDispatch::IntegrationTest
       delete subscriber_url(@subscriber)
     end
 
-    assert_redirected_to subscribers_url
+    assert_redirected_to new_subscriber_url
   end
 end

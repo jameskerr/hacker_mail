@@ -6,14 +6,16 @@ class SubscribersController < ApplicationController
     @subscriber = Subscriber.new
   end
 
-  # GET /subscribers/1/edit
-  def edit
+  def show
     if !@subscriber.confirmed?
       if @subscriber.update confirmed: true
-        @confirmed = true
+        flash.now.notice = "Email Confirmed"
       end
     end
-    render :edit
+  end
+
+  # GET /subscribers/1/edit
+  def edit
   end
 
   # POST /subscribers
@@ -39,7 +41,7 @@ class SubscribersController < ApplicationController
   # PATCH/PUT /subscribers/1.json
   def update
     if @subscriber.update(update_params)
-      redirect_to edit_subscriber_path(@subscriber), status: :ok, notice: "Updated"
+      redirect_to @subscriber, notice: "Updated"
     else
       render :edit, status: :unprocessable_entity
     end

@@ -1,6 +1,6 @@
 <p>Hi there,</p>
 <p>Here are the stories on the front page of <a href="https://news.ycombinator.com/">Hacker News</a>
-  with scores above your threshold of <b><%= @threshold %></b> in the last 24 hours.
+  with scores above your threshold of <b><%= @subscriber.threshold %></b> in the last 24 hours.
 </p>
 
 <p>
@@ -14,5 +14,7 @@
   <% end %>
   </ul>
 </p>
+
+<p>You can <%= link_to "change your threshold", edit_subscriber_url(@subscriber) %> or <%= link_to "unsubscribe", @subscriber %> at any time.</p>
 
 <p>Enjoy!</p>
