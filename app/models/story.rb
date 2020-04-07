@@ -1,5 +1,6 @@
 class Story < ApplicationRecord
-  has_many :samples
+  has_many :samples, dependent: :destroy
+  has_many :sent_stories, dependent: :delete_all
 
   def self.upsert(opts)
     Story.create(opts)

@@ -61,7 +61,7 @@ class SubscribersController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_subscriber
-    @subscriber = Subscriber.find_by(key: params[:key])
+    @subscriber = Subscriber.find_by!(key: params[:key])
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.

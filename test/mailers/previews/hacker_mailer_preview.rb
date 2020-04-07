@@ -2,7 +2,9 @@
 class HackerMailerPreview < ActionMailer::Preview
   # Preview this email at http://localhost:3000/rails/mailers/hacker_mailer/top_stories
   def top_stories
-    HackerMailer.top_stories("jkerr838@gmail.com", 300)
+    s = Subscriber.find_by(email: "jkerr838@gmail.com") ||
+        Subscriber.create(email: "jkerr838@gmail.com", threshold: 300)
+    HackerMailer.with(subscriber: s, stories: Story.take(5)).top_stories
   end
 
   def confirmation

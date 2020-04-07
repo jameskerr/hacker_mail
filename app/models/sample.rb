@@ -1,5 +1,5 @@
 class Sample < ApplicationRecord
-  belongs_to :story, dependent: :destroy
+  belongs_to :story
 
   scope :score_above, ->(score) { where("score >= ?", score) }
   scope :between, ->(from, to) { where("ts >= ?", from).where("ts < ?", to) }
