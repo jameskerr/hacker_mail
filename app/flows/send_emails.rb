@@ -1,10 +1,10 @@
 class SendEmails
   def self.run
-    new().run
+    new().to(Subscriber.where(confirmed: true))
   end
 
-  def run
-    Subscriber.where(confirmed: true).each do |s|
+  def to(subscribers)
+    subscribers.each do |s|
       HackerMailer
         .with(subscriber: s, stories: stories_for(s))
         .top_stories

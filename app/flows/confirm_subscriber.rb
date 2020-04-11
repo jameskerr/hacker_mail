@@ -2,6 +2,7 @@ class ConfirmSubscriber
   def self.run(subscriber, notifier = SlackNotifier.new)
     return false if subscriber.confirmed?
     if subscriber.update confirmed: true
+      SendEmails.new.to([subscriber])
       notifier.send("💌 New subscriber: #{subscriber.email} (#{subscriber.threshold})")
       return true
     else

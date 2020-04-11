@@ -8,7 +8,6 @@ class HackerMailer < ApplicationMailer
   def top_stories
     @subscriber = params[:subscriber]
     @stories = params[:stories]
-
     if !@stories.empty?
       mail to: @subscriber.email, subject: "#{@stories.length} HN Stories"
       @subscriber.stories << @stories
