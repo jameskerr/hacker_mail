@@ -33,9 +33,11 @@ class SubscribersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should confirm subscriber when visiting" do
-    assert_equal false, @subscriber.confirmed
-    get subscriber_url(@subscriber)
-    assert_equal true, @subscriber.reload.confirmed
+    SlackNotifier.stub :new, TestNotifier.new do
+      assert_equal false, @subscriber.confirmed
+      get subscriber_url(@subscriber)
+      assert_equal true, @subscriber.reload.confirmed
+    end
   end
 
   test "should update subscriber" do

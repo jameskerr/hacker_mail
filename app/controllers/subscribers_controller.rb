@@ -7,10 +7,8 @@ class SubscribersController < ApplicationController
   end
 
   def show
-    if !@subscriber.confirmed?
-      if @subscriber.update confirmed: true
-        flash.now.notice = "Email Confirmed"
-      end
+    if (ConfirmSubscriber.run(@subscriber))
+      flash.now.notice = "Email Confirmed"
     end
   end
 
