@@ -50,7 +50,7 @@ class SubscribersController < ApplicationController
   def destroy
     @subscriber.destroy!
     SlackNotifier.new.send("😕 Unsubscribed: #{@subscriber.email} (#{@subscriber.threshold})")
-    redirect_to new_subscriber_url, notice: "Subscriber was successfully destroyed."
+    redirect_to new_subscriber_url, notice: "Successfully unsubscribed"
   end
 
   private
