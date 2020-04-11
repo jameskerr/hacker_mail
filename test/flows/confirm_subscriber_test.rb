@@ -12,7 +12,7 @@ class ConfirmSubscriberTest < ActiveSupport::TestCase
   test "notify" do
     s.update! threshold: 300, confirmed: false
     assert_equal true, ConfirmSubscriber.run(s, n)
-    assert_equal "🥳 New subscriber: one@gmail.com (300)", n.messages.first
+    assert_equal "💌 New subscriber: one@gmail.com (300)", n.messages.first
   end
 
   test "if confirmed returns false" do

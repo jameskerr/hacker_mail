@@ -48,11 +48,9 @@ class SubscribersController < ApplicationController
   # DELETE /subscribers/1
   # DELETE /subscribers/1.json
   def destroy
-    @subscriber.destroy
-    respond_to do |format|
-      format.html { redirect_to new_subscriber_url, notice: "Subscriber was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    @subscriber.destroy!
+    SlackNotifier.new.send("😕 Unsubscribed: #{@subscriber.email} (#{@subscriber.threshold})")
+    redirect_to new_subscriber_url, notice: "Subscriber was successfully destroyed."
   end
 
   private

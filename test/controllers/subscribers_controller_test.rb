@@ -46,10 +46,11 @@ class SubscribersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy subscriber" do
-    assert_difference("Subscriber.count", -1) do
-      delete subscriber_url(@subscriber)
+    SlackNotifier.stub :new, TestNotifier.new do
+      assert_difference("Subscriber.count", -1) do
+        delete subscriber_url(@subscriber)
+      end
+      assert_redirected_to new_subscriber_url
     end
-
-    assert_redirected_to new_subscriber_url
   end
 end
