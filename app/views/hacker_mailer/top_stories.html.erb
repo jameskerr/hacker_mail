@@ -15,6 +15,6 @@
   </ul>
 </p>
 
-<p>You can <%= link_to "change your threshold", edit_subscriber_url(@subscriber) %> or <%= link_to "unsubscribe", @subscriber %> at any time.</p>
+<p>You can <%= link_to "change your threshold", edit_subscriber_url(@subscriber, host: "hn-alerts.com") %> or <%= link_to "unsubscribe", subscriber_url(@subscriber, host: "hn-alerts.com")  %> at any time.</p>
 
 <p>Enjoy!</p>
