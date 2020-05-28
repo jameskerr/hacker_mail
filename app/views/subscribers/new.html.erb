@@ -9,17 +9,10 @@
       <p>I love <a href="https://news.ycombinator.com">Hacker News</a>. The algorithm used to score stories is consistently impressive.</p>
       <p>But every time I visit Hacker News, I do the same thing.
         I scan the front page looking for stories with high points.</p>
-        <p>I realized a computer could do this for me and this service was conceived.</p>
+        <p>This service does just that.</p>
         <p>Once a day, it will send you an email with all the front page stories that have exceeded your points threshold.</p>
 
     </article>
-  </section>
-
-  <section>
-    <h3>Sign me up!</h3>
-    <div class="subscriber-form">
-      <%= render 'form', subscriber: @subscriber %>
-    </div>
   </section>
 
   <section>
@@ -63,5 +56,10 @@
     </div>
   </section>
 
-
+  <section>
+    <h3>Sign me up!</h3>
+    <div class="subscriber-form">
+      <%= render 'form', subscriber: @subscriber %>
+    </div>
+  </section>
 </main>

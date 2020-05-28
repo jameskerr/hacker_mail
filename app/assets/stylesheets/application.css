@@ -23,4 +23,9 @@ body {
   background: linear-gradient(to bottom right, orangered, tomato, darkorange);
   min-height: 100%;
   color: #202020;
+  line-height: 1.5;
+}
+
+p {
+  font-weight: 400;
 }
