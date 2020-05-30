@@ -1,0 +1,13 @@
+footer {
+  background: #202020;
+  padding: 1rem 0;
+
+  a, p {
+    color: lighten(#202020, 50%);
+  }
+
+  p {
+    margin: 1rem 0;
+    text-align: center;
+  }
+}

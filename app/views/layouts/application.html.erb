@@ -11,10 +11,15 @@
   </head>
 
   <body>
-    <%= yield %>
+    <div class="content">
+      <%= yield %>
+    </div>
+    <footer>
+      <div class="wrap">
+        <p><%= link_to "Suggest an Improvement", "https://github.com/jameskerr/hacker_mail/issues/new" %></p>
+        <p><%= link_to "Source Code", "https://github.com/jameskerr/hacker_mail" %></p>
+        <p>Made with ☕️ by James Kerr</p>
+      </div>
+    </footer>
   </body>
-  <footer>
-    <%= link_to "Suggest an Improvement", "https://github.com/jameskerr/hacker_mail/issues/new" %>
-    <%= link_to "Source Code", "https://github.com/jameskerr/hacker_mail" %>
-  </footer>
 </html>
