@@ -4,9 +4,9 @@ set :output, "./log/cron.log"
 set :environment, "production"
 
 every 5.minutes do
-  rake "stories:sample"
+  rake "sample"
 end
 
 every 1.day at: "7:00 am" do
-  rake "emails:send"
+  rake "email"
 end

@@ -25,21 +25,49 @@ class StoryTest < ActiveSupport::TestCase
     stories(:one).samples << Sample.new(score: 1000)
     stories(:one).samples << Sample.new(score: 5000)
 
-    subquery = <<-SQL
-      SELECT story_id, score, ROW_NUMBER() OVER (PARTITION BY story_id ORDER BY score DESC) as row
-      FROM samples
-    SQL
+    story = Story
+      .select(:id, :title, :score)
+      .join_max_score
+      .order("score DESC")
+      .first
 
-    query = <<-SQL
-      SELECT title, score
-      FROM stories s
-      JOIN (#{subquery}) scores
-      ON s.id = scores.story_id AND row = 1
-      ORDER BY score DESC
-    SQL
+    assert_equal "Story One", story.title
+    assert_equal 5000, story.score
+  end
 
-    results = Story.find_by_sql(query).pluck(:title, :score)
+  test "next up for subscriber only above threshold" do
+    subscriber = subscribers :one
+    story = stories :one
 
-    assert_equal results, [["Story One", 5000], ["Story Two", 252]]
+    subscriber.update! threshold: 100
+    assert_equal 0, Story.next_up_for(subscriber).count(:id)
+
+    story.samples << Sample.new(score: 99)
+    assert_equal 0, Story.next_up_for(subscriber).count(:id)
+
+    story.samples << Sample.new(score: 100)
+    assert_equal 1, Story.next_up_for(subscriber).count(:id)
+
+    story.samples << Sample.new(score: 200)
+    assert_equal 1, Story.next_up_for(subscriber).count(:id)
+    assert_equal 200, Story.next_up_for(subscriber).first.score
+
+    subscriber.stories << story
+
+    assert_equal 0, Story.next_up_for(subscriber).count(:id)
+  end
+
+  test "next up for subscriber sorts by score" do
+    subscriber = subscribers :one
+    story1 = stories :one
+    story2 = stories :two
+    subscriber.update! threshold: 100
+
+    story1.samples.clear
+    story2.samples.clear
+    story1.samples << Sample.new(score: 200)
+    story2.samples << Sample.new(score: 199)
+
+    assert_equal [200, 199], Story.next_up_for(subscriber).map(&:score)
   end
 end

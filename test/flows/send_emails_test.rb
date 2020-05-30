@@ -1,6 +1,6 @@
 require "test_helper"
 
-class SentStoryTest < ActiveSupport::TestCase
+class SendEmailsTest < ActiveSupport::TestCase
   test "no one confirmed" do
     Subscriber.update_all confirmed: false
 

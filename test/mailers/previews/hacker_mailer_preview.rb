@@ -4,7 +4,8 @@ class HackerMailerPreview < ActionMailer::Preview
   def top_stories
     s = Subscriber.find_by(email: "jkerr838@gmail.com") ||
         Subscriber.create(email: "jkerr838@gmail.com", threshold: 300)
-    HackerMailer.with(subscriber: s, stories: Story.take(5)).top_stories
+
+    HackerMailer.with(subscriber: s, stories: Story.next_up_for(s)).top_stories
   end
 
   def confirmation
