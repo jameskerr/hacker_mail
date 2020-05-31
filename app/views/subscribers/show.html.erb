@@ -1,4 +1,5 @@
-<p id="notice"><%= notice %></p>
+
+<div class="wrap">
 <h1>Your Preferences</h1>
 
 <p><label>Email:</label> <%= @subscriber.email %></p>
@@ -6,3 +7,4 @@
 
 <%= link_to "Edit Preferences", edit_subscriber_path(@subscriber) %>
 <%= link_to "Unsubscribe", @subscriber, method: :delete, data: {confirm: "Are you sure?"} %>
+</div>

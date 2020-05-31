@@ -12,6 +12,11 @@
 
   <body>
     <div class="content">
+      <% if notice %>
+      <div class="wrap">
+        <p id="notice"><%= notice %></p>
+      </div>
+      <% end %>
       <%= yield %>
     </div>
     <footer>
