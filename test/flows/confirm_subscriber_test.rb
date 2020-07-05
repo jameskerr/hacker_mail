@@ -26,16 +26,4 @@ class ConfirmSubscriberTest < ActiveSupport::TestCase
     ConfirmSubscriber.run(s, n)
     assert_equal true, s.confirmed
   end
-
-  test "immediately sends the first email" do
-    s.update! confirmed: false, threshold: 1
-    mailer = Minitest::Mock.new
-    mailer.expect :to, nil, [[s]]
-
-    SendEmails.stub :new, mailer do
-      ConfirmSubscriber.run(s, n)
-    end
-
-    mailer.verify
-  end
 end
