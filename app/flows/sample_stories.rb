@@ -13,6 +13,7 @@ class SampleStories
         res = http.request req
         JSON.parse(res.body)
       end.map do |item|
+        return if !item
         title = item["title"]
         score = item["score"]
         id = item["id"]
